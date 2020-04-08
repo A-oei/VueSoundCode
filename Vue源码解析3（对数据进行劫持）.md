@@ -1,8 +1,6 @@
 那么实现了上面的代码还是远远不够的，我们在使用`Vue`都会发现，在`Vue`中我们的数据都是响应式的，也就是我们改变了某一项数据，视图也是会响应式发生变化的，这也是我们这一章的内容，如何让数据变为响应式的
 
-了解`Vue`的都清楚，在`Vue2.0`中是使用了[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)来对数据进行劫持的，在
-
-`Vue3.0`中使用了最新的[Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)，有兴趣的同学可以对比一下这两个方法的不同
+了解`Vue`的都清楚，在`Vue2.0`中是使用了[Object.defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)来对数据进行劫持的，在`Vue3.0`中使用了最新的[Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)，有兴趣的同学可以对比一下这两个方法的不同
 
 那么我们如何对一个数据进行劫持呢
 
