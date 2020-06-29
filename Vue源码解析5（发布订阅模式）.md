@@ -98,11 +98,24 @@ arr==arr;//true
 
 如果是上面的情况，由于已经创建了`arr`，所以都是一个地址，所以结果为true。
 
-在执行
+所以在执行`off`方法的时候，我们如果想要某个指定的`handle`，前提是该方法必须是一个具名函数，否则无法进行删除，就像如果我们使用`removeEventListener`的时候必须在第二个参数中传入一个函数名称，而不是一个函数。
 
 ##### emit
 
-* `emit`方法可以发射通过`on`绑定的方法
+* `emit`方法可以发射通过`on`绑定的方法，`emit`方法可以接收多个参数，第一个参数表示要执行的事件名称，其余参数表示传入到方法中的参数
+
+```javascript
+emit(type) {
+  let args = Array.prototype.slice.call(arguments, 1);
+  let _events = eventHandles[type];
+  if (!_events) return new Error(`${type}方法不存在`);
+  for (const event of _events) {
+    event.apply(null,args);
+  }
+}
+```
+
+这样，一个发布订阅模式就完成了。
 
 
 
