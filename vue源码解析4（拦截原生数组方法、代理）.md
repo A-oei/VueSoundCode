@@ -1,8 +1,8 @@
 #### 拦截数组
 
-我们在使用Vue的时候经常会有的一个操作，例如对某个数组进行`push`、`pop`等操作，在Vue的官方文档中也表示支持`push`等7个操作，但是如果我们对`defineProperty`有了解的话我们会知道该方法是不支持检测数组变化的，同样也不支持检测数组方法的，Vue能够对`push`等方法响应式的变化是因为对原生的数组方法进行了拦截，也就是官方文档中说的**Vue将被侦听的数组的变更方法进行了包裹**
+我们在使用Vue的时候经常会有的一个操作，例如对某个数组进行`push`、`pop`等操作，在Vue的官方文档中也表示支持`push`等7个操作，但是原生`defineProperty`是不支持检测数组变化的，Vue能够对`push`等方法响应式的变化是因为对原生的数组方法进行了拦截，也就是官方文档中说的[Vue将被侦听的数组的变更方法进行了包裹](https://cn.vuejs.org/v2/guide/list.html#变更方法)。
 
-我们知道数组之所以能够调用方法是因为在原型中继承了`Array.prototype`中方法，我们可以大概将这条链理解为如下
+我们知道数组之所以能够调用方法是因为在[原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)中继承了`Array.prototype`中方法，我们可以大概将这条链理解为如下
 
 ```
 arr=>Array.prototype=>Object.prototype
@@ -87,7 +87,7 @@ function proxy(target,prop,key) {
 
 我们来测试一下
 
-```
+```javascript
 let a = {
   _data: {
     name: "a",
@@ -105,3 +105,4 @@ console.log(a.name);//a
 console.log(a.msg); //this's a msg
 ```
 
+到这里我们就基本实现了代理和数组方法拦截这两个方法了，（￣▽￣）↗

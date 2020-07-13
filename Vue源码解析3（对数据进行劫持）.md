@@ -27,7 +27,7 @@ obj.name='jack' //设置值为jack jack
 
 这里我们就对`obj.name`进行了劫持，那么如果我们要对所有`data`中的数据都进行劫持，就遍历数据然后执行同样的操作就可以了
 
-但是这里存在一个问题，我们这里需要一个外部的变量来保存我们的`name`的值，那么如果所有的数据都这么做就会设置大量的全局变量，那么我们同样可以封装一个函数，将这个外部的变量变成一个函数内部的变量，在函数内部的`get`、`set`方法调用的时候让这个参数作为一个**闭包**存在
+但是这里存在一个问题，我们这里需要一个外部的变量来保存我们的`name`的值，那么如果所有的数据都这么做就会设置大量的全局变量，为了解决这个问题我们可以封装一个函数，将这个外部的变量变成一个函数内部的变量，在函数内部的`get`、`set`方法调用的时候让这个参数作为一个**闭包**存在
 
 那么这个函数的实现思路就很简单了
 
@@ -67,42 +67,44 @@ o.name='jack';//设置name的值为jack
   * 如果是一个对象，那么需要调用`defineReactive`，如果此时数组中的是对象，那么我们需要在`defineReactive`中调用我们的递归方法对对象再进行遍历
 
 ```javascript
-function reactify(obj) {
-	let key = Object.keys(obj);
-    
-	key.forEach(item => {
-		if (Array.isArray(obj[item])) {
-			reactify(obj[item]);
-		}
-		else {
-			defineReactive(obj, item, obj[item], true)
-		}
-	})
+function observe(obj) {
+  if (Object.prototype.toString.call(obj).toLocaleLowerCase() === "[object array]") {
+    for (const arr of obj) {
+      observe(arr)
+    }
+  } else {
+    let keys = Object.keys(obj);
+    keys.forEach(key => {
+      defineReactive(obj, key, obj[key], true);
+    })
+  }
 }
 ```
 
-`reactify`就实现如果我们传入对象中如果有值是数组的时候就递归调用自身，但是如果我们传入的值是一个对象的话还是没有实现劫持，那么我们可以对`defineReactive`进行一下改造，改造的思路就是
+`observe`就实现如果我们传入对象中如果有值是数组的时候就递归调用自身，但是如果我们传入的值是一个对象的话还是没有实现劫持，那么我们可以对`defineReactive`进行一下改造，改造的思路就是
 
-* 如果传入的`value`值是一个对象，那么将`value`去调用作为参数去调用`reactify`，让`reactify`遍历对象中的所有属性，然后对数据进行劫持
+* 如果传入的`value`值是一个对象，那么将`value`去调用作为参数去调用`observe`，让`observe`遍历对象中的所有属性，然后对数据进行劫持
 
 ```javascript
-function defineReactive(target,key,value,enumerable){
-    Object.prototype.toString.call(value) === "[object Object]"
-            && reactify(value);
-    
-	Object.defineProperty(target,key,{
-		enumerable,
-		configurable:true,
-		get(){
-			console.log(`获取${key}`);
-			return value;
-		},
-		set(newValue){
-			console.log(`设置${key}的值为${newValue}`);
-			value=newValue;
-		}
-	})
+function defineReactive(target, key, value, enumerable) {
+  if (Object.prototype.toString.call(value).toLocaleLowerCase() === "[object object]" || Object.prototype.toString.call(value).toLocaleLowerCase() === "[object array]") observe(value);
+
+  Object.defineProperty(target, key, {
+    enumerable,
+    configurable: true,
+    get() {
+      console.log(`获取${key}`);
+      return value;
+    },
+    set(newValue) {
+      console.log(`设置${key}的值为${newValue}`);
+      if (newValue === value) return;
+      if (Object.prototype.toString.call(value).toLocaleLowerCase() === "[object object]") observe(value);
+      value = newValue;
+    }
+  })
 }
 ```
 
-那么到这里我们就实现了对`data`中数据的劫持，在劫持了数据之后我们怎么实现每一次的数据改变都更改视图呢，很简单，只要我们在每一次`set`的时候重新渲染模板就可以了
+那么到这里我们就实现了对`data`中数据的劫持，在劫持了数据之后我们怎么实现每一次的数据改变都更改视图呢，很简单，只要我们在每一次`set`的时候重新渲染模板就可以了，（￣▽￣）↗
+
