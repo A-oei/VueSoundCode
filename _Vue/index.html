@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="app">
+  <p>{{msg}}</p>
+  <p>{{info.name}}</p>
+</div>
+</body>
+</html>
+<script src="./VNode.js"></script>
+<script src="./dep.js"></script>
+<script src="./watcher.js"></script>
+<script src="./common.js"></script>
+<script src="./initData.js"></script>
+<script src="./mount.js"></script>
+<script>
+  class _Vue {
+    constructor(options) {
+      this._data = options.data;
+      this._el = options.el;
+
+      this._template = document.querySelector(this._el);
+      this._parentTemplate = this._template.parentNode;
+
+      this.initData();
+      this.mount();
+    }
+
+    initData() { //处理初始化数据
+      let keys = Object.keys(this._data);
+
+      observe(this._data);//响应式处理数据
+
+      keys.forEach(key => {
+        proxy(this, '_data', key);
+      }) //进行数据代理
+    }
+
+    mount() {//生成render方法，渲染模板
+      this.render = this.createRenderFn();
+      this.mountComponent();
+    }
+
+    mountComponent() {
+      let mount = () => {
+       this.update(this.render())
+      }
+      new Watcher( this, mount );
+    }
+
+    createRenderFn() { //生成虚拟ODM，将数据填充到虚拟DOM中
+      let ast = getVnode(this._template);
+
+      return function render() {
+        let _template = combine(ast, this._data);
+        return _template;
+      }
+    }
+
+    update(vnode) { //更新视图
+      let _template = parseVNode(vnode);
+
+      this._parentTemplate.replaceChild(_template, document.querySelector(this._el))
+    }
+  }
+
+
+  let obj = {
+    name: "name",
+    age: "age",
+    arr: [{name: "name"}]
+  }
+
+  observe(obj);
+
+
+  let app = new _Vue({
+    el: "#app",
+    data: {
+      info: {
+        name: "tom",
+        age: 18
+      },
+      msg: `my name is ${this.data}`,
+      arr:[{name:"name"}]
+    }
+  });
+</script>
