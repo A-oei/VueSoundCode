@@ -10,7 +10,7 @@
 * [拦截原生数组方法、代理](https://github.com/A-oei/VueSoundCode/blob/master/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%904%EF%BC%88%E6%8B%A6%E6%88%AA%E5%8E%9F%E7%94%9F%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E3%80%81%E4%BB%A3%E7%90%86%EF%BC%89.md)
 * [模拟Vue函数](https://github.com/A-oei/VueSoundCode/blob/master/Vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%905%EF%BC%88%E6%A8%A1%E6%8B%9FVue%E5%87%BD%E6%95%B0%EF%BC%89.md)
 * [发布订阅模式](https://github.com/A-oei/VueSoundCode/blob/master/Vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%906%EF%BC%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%EF%BC%89.md)
-* [引入Watcher和Dep](https://github.com/A-oei/VueSoundCode/blob/master/Vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%907%EF%BC%88%E5%BC%95%E5%85%A5Watcher%E4%BA%8EDep%EF%BC%89.md)
+* [引入Watcher和Dep](https://github.com/A-oei/VueSoundCode/blob/master/Vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%907%EF%BC%88%E5%BC%95%E5%85%A5Watcher%E5%92%8CDep%EF%BC%89.md)
 
 现在也有很多很好的对Vue源码解析的文章，可以作为参考
 
