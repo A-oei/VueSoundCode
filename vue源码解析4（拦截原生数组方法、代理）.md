@@ -14,7 +14,7 @@ arr=>Array.prototype=>Object.prototype
 arr=>拦截的方法=>Array.prototype=>Object.prototype
 ```
 
-这里我们需要用的一个方法[Object.create](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create)，该方法可以**创建一个新对象，使用现有的对象来提供新创建对象的`__proto__`**，举一个例子
+这里我们需要用的一个[Object.create](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create)方法，该方法可以**创建一个新对象，使用现有的对象来提供新创建对象的`__proto__`**，举一个例子
 
 ```javascript
 let a = {

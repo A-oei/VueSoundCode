@@ -35,7 +35,7 @@ obj.name='jack' //设置值为jack jack
   * **target** 当前需要设置劫持的对象
   * **key** 劫持对象上的属性
   * **value** 作为闭包的属性值
-  * **enumerable** 该属性是否可被枚举
+  * **enumerable** 该属性是否可被枚举，在vue中有部分属性需要设置为不可枚举，防止循环比遍历，例如`_vue`
 
 ```javascript
 function defineReactive(target,key,value,enumerable){

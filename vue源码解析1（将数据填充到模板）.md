@@ -26,7 +26,7 @@ let data = {
 const r_brackets = /\{\{(.+?)\}\}/g;
 ```
 
-在完成方法之前我们要有以下的概念
+在完成方法之前我们要有下面的概念
 
 * [节点类型](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType)，在`javascript`中以`nodeType`返回节点类型，其中`1`代表元素节点，`3`代表文本节点，**文本节点有nodeValue，而元素节点有nodeName**
 * [replace](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace)，该方法第二个参数可以是一个函数，函数的参数是匹配的返回结果

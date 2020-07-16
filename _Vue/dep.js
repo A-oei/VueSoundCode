@@ -42,3 +42,4 @@ function pushTarget(target) {
 function popTargte() {
   Dep.target = targetStack.shift();
 }
+

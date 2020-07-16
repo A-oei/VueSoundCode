@@ -9,8 +9,8 @@
 </head>
 <body>
 <div id="app">
-  <p>{{msg}}</p>
-  <p>{{info.name}}</p>
+  <p>姓名：{{info.name}}</p>
+  <p>个人介绍：{{msg}}</p>
 </div>
 </body>
 </html>
@@ -30,6 +30,7 @@
       this._parentTemplate = this._template.parentNode;
 
       this.initData();
+
       this.mount();
     }
 
@@ -37,7 +38,6 @@
       let keys = Object.keys(this._data);
 
       observe(this._data);//响应式处理数据
-
       keys.forEach(key => {
         proxy(this, '_data', key);
       }) //进行数据代理
@@ -50,9 +50,10 @@
 
     mountComponent() {
       let mount = () => {
-       this.update(this.render())
+        console.log('%c渲染了', 'color:red');
+        this.update(this.render())
       }
-      new Watcher( this, mount );
+      new Watcher(this, mount);
     }
 
     createRenderFn() { //生成虚拟ODM，将数据填充到虚拟DOM中
@@ -71,16 +72,6 @@
     }
   }
 
-
-  let obj = {
-    name: "name",
-    age: "age",
-    arr: [{name: "name"}]
-  }
-
-  observe(obj);
-
-
   let app = new _Vue({
     el: "#app",
     data: {
@@ -88,8 +79,9 @@
         name: "tom",
         age: 18
       },
-      msg: `my name is ${this.data}`,
-      arr:[{name:"name"}]
+      msg: `my name is tom`,
+      test: "test",
+      arr: [{name: "name"}]
     }
   });
 </script>
